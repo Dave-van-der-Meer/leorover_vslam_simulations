@@ -416,7 +416,7 @@
     </joint>
 
     <joint name="${link_prefix}tracker_mount_plate_joint" type="fixed">
-      <origin xyz="0.0 0.0 0.005" rpy="0 0 0"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
       <parent link="${link_prefix}tracker_mount_plate_frame"/>
       <child link="${link_prefix}tracker_mount_plate_link"/>
     </joint>
