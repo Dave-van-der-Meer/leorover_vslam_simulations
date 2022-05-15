@@ -280,6 +280,8 @@
       </visual>
     </link>
 
+    <link name="${link_prefix}realsense_imu_link"/>
+
     <!-- JOINTS -->
 
     <xacro:if value="${footprint_link}">
@@ -425,6 +427,12 @@
       <origin xyz="0.0 0.002 0.0129" rpy="0 0 0"/>
       <parent link="${link_prefix}tracker_mount_plate_link"/>
       <child link="${link_prefix}tracker_link"/>
+    </joint>
+
+    <joint name="${link_prefix}realsense_imu_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${link_prefix}realsense_link"/>
+      <child link="${link_prefix}realsense_imu_link"/>
     </joint>
 
   </xacro:macro>
@@ -647,6 +655,29 @@
       </joint>
       <actuator name="rocker_R_virtual_motor"/>
     </transmission>
+
+
+    <!-- Simulated IMU -->
+    <gazebo reference="realsense_imu_link">
+      <gravity>true</gravity>
+      <sensor name="imu_sensor" type="imu">
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <visualize>true</visualize>
+        <topic>__default_topic__</topic>
+        <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+          <topicName>imu</topicName>
+          <bodyName>realsense_imu_link</bodyName>
+          <updateRateHZ>10.0</updateRateHZ>
+          <gaussianNoise>0.0</gaussianNoise>
+          <xyzOffset>0 0 0</xyzOffset>
+          <rpyOffset>0 0 0</rpyOffset>
+          <frameName>realsense_imu_link</frameName>
+          <initialOrientationAsReference>false</initialOrientationAsReference>
+        </plugin>
+        <pose>0 0 0 0 0 0</pose>
+      </sensor>
+    </gazebo>
 
   </xacro:macro>
 
