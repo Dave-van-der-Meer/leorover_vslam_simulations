@@ -1,6 +1,6 @@
 <launch>
   <arg name="config" default="robot" />
-  <arg name="rviz_file" default="$(find spacer_leorover_viz)/rviz/$(arg config).rviz"/>
+  <arg name="rviz_file" default="$(find leorover_vslam_viz)/rviz/$(arg config).rviz"/>
 
   <node name="$(anon rviz)" 
         pkg="rviz"

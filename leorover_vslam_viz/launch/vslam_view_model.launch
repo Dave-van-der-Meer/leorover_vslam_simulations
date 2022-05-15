@@ -1,7 +1,7 @@
 <launch>
 
   <arg name="gui" default="false" />
-  <arg name="model" default="$(find leo_description)/urdf/spacer_leo.urdf.xacro"/>
+  <arg name="model" default="$(find leo_description)/urdf/vslam_leo.urdf.xacro"/>
 
   <param name="robot_description" 
          command="$(find xacro)/xacro --inorder $(arg model)"/>
@@ -27,7 +27,7 @@
     <param name="publish_default_efforts" value="true"/>
   </node>
 
-  <include file="$(find ism_leorover_viz)/launch/rviz.launch">
+  <include file="$(find leorover_vslam_viz)/launch/rviz.launch">
     <arg name="config" value="robot"/>
   </include>
 

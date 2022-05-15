@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(spacer_leorover_viz)
+project(leorover_vslam_viz)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -199,4 +199,4 @@ include_directories(
 # endif()
 
 ## Add folders to be run by python nosetests
-# catkin_add_nosetests(test)
+# catkin_add_nosetess(test)
