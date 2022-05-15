@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>leorover_spacer_sim</name>
-  <version>0.0.0</version>
-  <description>The leorover_spacer_sim package</description>
+  <name>leorover_vslam_sim</name>
+  <version>0.0.1</version>
+  <description>The leorover_vslam_sim package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="dave@todo.todo">dave</maintainer>
+  <maintainer email="dave.vandermeer@uni.lu">Dave van der Meer</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
