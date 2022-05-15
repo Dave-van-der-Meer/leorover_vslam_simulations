@@ -281,6 +281,8 @@
     </link>
 
     <link name="${link_prefix}realsense_imu_link"/>
+    <link name="${link_prefix}realsense_RGBD_frame"/>
+    <link name="${link_prefix}realsense_RGBD_optical_frame"/>
 
     <!-- JOINTS -->
 
@@ -430,9 +432,21 @@
     </joint>
 
     <joint name="${link_prefix}realsense_imu_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0.007" rpy="0 0 0"/>
       <parent link="${link_prefix}realsense_link"/>
       <child link="${link_prefix}realsense_imu_link"/>
+    </joint>
+
+    <joint name="${link_prefix}realsense_RGBD_joint" type="fixed">
+      <origin xyz="0 0 0.007" rpy="0 0 0"/>
+      <parent link="${link_prefix}realsense_link"/>
+      <child link="${link_prefix}realsense_RGBD_frame"/>
+    </joint>
+
+    <joint name="${link_prefix}realsense_RGBD_optical_frame_joint" type="fixed">
+      <origin xyz="0 0 0.007" rpy="-${pi/2} 0 -${pi/2}"/>
+      <parent link="${link_prefix}realsense_RGBD_frame"/>
+      <child link="${link_prefix}realsense_RGBD_optical_frame"/>
     </joint>
 
   </xacro:macro>
@@ -657,8 +671,8 @@
     </transmission>
 
 
-    <!-- Simulated IMU -->
-    <gazebo reference="realsense_imu_link">
+    <!-- Simulated Realsense IMU -->
+    <gazebo reference="${link_prefix}realsense_imu_link">
       <gravity>true</gravity>
       <sensor name="imu_sensor" type="imu">
         <always_on>true</always_on>
@@ -678,6 +692,51 @@
         <pose>0 0 0 0 0 0</pose>
       </sensor>
     </gazebo>
+
+    <!-- Simulated Realsense RGBD Camera -->
+    <gazebo reference="${link_prefix}realsense_RGBD_frame">
+    <xacro:property name="camera_name" value="realsense_RGBD_camera" />
+      <sensor name="realsense_RGBD_camera_gazebo" type="depth">
+        <update_rate>20</update_rate>
+        <camera>
+          <horizontal_fov>1.047198</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.05</near>
+            <far>3</far>
+          </clip>
+        </camera>
+        <plugin name="realsense_RGBD_controller" filename="libgazebo_ros_openni_kinect.so">
+          <baseline>0.2</baseline>
+          <alwaysOn>true</alwaysOn>
+          <updateRate>1.0</updateRate>
+          <cameraName>${camera_name}_ir</cameraName>
+          <imageTopicName>/${camera_name}/color/image_raw</imageTopicName>
+          <cameraInfoTopicName>/${camera_name}/color/camera_info</cameraInfoTopicName>
+          <depthImageTopicName>/${camera_name}/depth/image_raw</depthImageTopicName>
+          <depthImageInfoTopicName>/${camera_name}/depth/camera_info</depthImageInfoTopicName>
+          <pointCloudTopicName>/${camera_name}/depth/points</pointCloudTopicName>
+          <frameName>realsense_RGBD_optical_frame</frameName>
+          <pointCloudCutoff>0.5</pointCloudCutoff>
+          <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+          <distortionK1>0.00000001</distortionK1>
+          <distortionK2>0.00000001</distortionK2>
+          <distortionK3>0.00000001</distortionK3>
+          <distortionT1>0.00000001</distortionT1>
+          <distortionT2>0.00000001</distortionT2>
+          <CxPrime>0</CxPrime>
+          <Cx>0</Cx>
+          <Cy>0</Cy>
+          <focalLength>0</focalLength>
+          <hackBaseline>0</hackBaseline>
+        </plugin>
+      </sensor>
+    </gazebo>
+
 
   </xacro:macro>
 
